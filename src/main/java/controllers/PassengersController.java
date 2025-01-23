@@ -8,7 +8,8 @@ import java.util.List;
 
 public class PassengersController implements IPassengersController {
     private final IPassengersRepository passengersRepository;
-
+    public void createPassenger(Passenger passenger) {
+    }
     public PassengersController(IPassengersRepository passengersRepository) {
         this.passengersRepository = passengersRepository;
     }

@@ -1,10 +1,11 @@
 package models;
 
-public class Passenger {
+public class Passenger implements Comparable<Passenger> {
     private int id;
     private String name;
     private boolean gender;
 
+    public Passenger() {}
     public Passenger(String name, boolean gender) {
         this.name = name;
         this.gender = gender;
@@ -43,4 +44,11 @@ public class Passenger {
                 ", gender=" + gender +
                 '}';
     }
+    @Override
+    public int compareTo(Passenger o){
+        return this.name.compareTo(o.name);
+    }
+
+
+
 }
