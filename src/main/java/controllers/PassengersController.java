@@ -34,9 +34,10 @@ public class PassengersController implements IPassengersController {
         StringBuilder response = new StringBuilder();
 
         for (Passenger passenger : passengers) {
-            response.append(passenger);
+            response.append(passenger).append("\n");
         }
 
         return response.toString();
     }
+
 }
