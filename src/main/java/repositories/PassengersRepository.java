@@ -40,6 +40,25 @@ public class PassengersRepository implements IPassengersRepository {
     }
 
     @Override
+    public boolean deletePassengerById(int id) {
+        Connection connection = database.getConnection();
+
+        String query = "DELETE FROM passengers WHERE id = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setInt(1, id);
+
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Unable to delete passenger: " + e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
     public Passenger getPassengerById(int id) {
         Connection connection = database.getConnection();
 

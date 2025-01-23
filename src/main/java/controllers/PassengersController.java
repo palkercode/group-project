@@ -22,6 +22,12 @@ public class PassengersController implements IPassengersController {
     }
 
     @Override
+    public String deletePassengerById(int id) {
+        boolean deleted = passengersRepository.deletePassengerById(id);
+        return deleted ? "Passenger was deleted" : "An error occured when tried to delete a passenger";
+    }
+
+    @Override
     public String getPassengerById(int id) {
         Passenger passenger = passengersRepository.getPassengerById(id);
         return passenger == null ? "Passenger does not exist" : passenger.toString();
