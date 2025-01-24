@@ -5,7 +5,6 @@ import database.PostgreSQL;
 import models.Passenger;
 import repositories.interfaces.IPassengersRepository;
 import repositories.PassengersRepository;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.Scanner;
@@ -64,24 +63,13 @@ public class Main {
                 case 4:
                     System.out.print("Enter the file path: ");
                     String path = consoleScanner.nextLine();
-                    File file = new File(path);
-                    if (!file.exists()) {
-                        System.out.println("File not found!");
+                    while (scanner.hasNextLine()) {
+                        Passenger passenger = new Passenger();
+                        passenger.setName(scanner.next());
+                        passenger.setGender(scanner.next().equalsIgnoreCase("male"));
+                        passengersController.createPassenger(passenger);
                         break;
                     }
-                    Scanner fileScanner = new Scanner(file);
-                    while (fileScanner.hasNextLine()) {
-                        String line = fileScanner.nextLine();
-                        String[] data = line.split(",");
-                        if (data.length == 2) {
-                            String passengerName = data[0].trim();
-                            String passengerGender = data[1].trim();
-                            passengersController.createPassenger(passengerName, passengerGender);
-                        }
-                    }
-                    fileScanner.close();
-                    System.out.println("Passengers imported successfully.");
-                    break;
                 case 5:
                     System.out.print("Enter flight number: ");
                     String flightNumber = scanner.nextLine();
@@ -92,9 +80,9 @@ public class Main {
                     System.out.println("Flight added successfully (functionality to be implemented).\n");
                     break;
 
-                case 6:
-                    System.out.println("List of flights (functionality to be implemented).\n");
-                    break;
+            case 6:
+                System.out.println("List of flights (functionality to be implemented).\n");
+                break;
 
                 case 7:
                     System.out.print("Enter Flight ID: ");
