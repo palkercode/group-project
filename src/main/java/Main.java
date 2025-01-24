@@ -25,13 +25,17 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         Scanner consoleScanner = new Scanner(System.in);
+
         while (running) {
             System.out.println("\n=== Airport Management System ===");
             System.out.println("1. Add Passenger");
             System.out.println("2. List Passengers");
             System.out.println("3. Get Passenger By ID");
             System.out.println("4. Import passengers from file");
-            System.out.println("5. Exit");
+            System.out.println("5. Add Flight");
+            System.out.println("6. List Flights");
+            System.out.println("7. Get Flight By ID");
+            System.out.println("8. Exit");
             System.out.print("Choose: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -48,7 +52,6 @@ public class Main {
                 case 2:
                     Collections.sort(passengerRepository.getAllPassengers());
                     System.out.println(passengersController.getAllPassengers());
-
                     break;
 
                 case 3:
@@ -58,35 +61,58 @@ public class Main {
                     System.out.println(passengersController.getPassengerById(id));
                     break;
 
-
                 case 4:
                     System.out.print("Enter the file path: ");
-
                     String path = consoleScanner.nextLine();
-
-                    while (scanner.hasNextLine()) {
-                        Passenger passenger = new Passenger();
-
-                        passenger.setName(scanner.next());
-
-                        passenger.setGender(scanner.next().equalsIgnoreCase("male"));
-
-
-                        passengersController.createPassenger(passenger);
+                    File file = new File(path);
+                    if (!file.exists()) {
+                        System.out.println("File not found!");
                         break;
                     }
-
-                        case 5:
-                            running = false;
-                            break;
-
-                        default:
-                            System.out.println("Invalid choice. Try again!");
+                    Scanner fileScanner = new Scanner(file);
+                    while (fileScanner.hasNextLine()) {
+                        String line = fileScanner.nextLine();
+                        String[] data = line.split(",");
+                        if (data.length == 2) {
+                            String passengerName = data[0].trim();
+                            String passengerGender = data[1].trim();
+                            passengersController.createPassenger(passengerName, passengerGender);
+                        }
                     }
+                    fileScanner.close();
+                    System.out.println("Passengers imported successfully.");
+                    break;
+                case 5:
+                    System.out.print("Enter flight number: ");
+                    String flightNumber = scanner.nextLine();
+                    System.out.print("Enter destination: ");
+                    String destination = scanner.nextLine();
+                    System.out.print("Enter departure time: ");
+                    String departureTime = scanner.nextLine();
+                    System.out.println("Flight added successfully (functionality to be implemented).\n");
+                    break;
+
+                case 6:
+                    System.out.println("List of flights (functionality to be implemented).\n");
+                    break;
+
+                case 7:
+                    System.out.print("Enter Flight ID: ");
+                    int flightId = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Flight details (functionality to be implemented).\n");
+                    break;
+
+                case 8:
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Try again!\n");
             }
-
-            database.closeConnection();
-            scanner.close();
         }
-    }
 
+        database.closeConnection();
+        scanner.close();
+    }
+}
